@@ -1,0 +1,29 @@
+{
+  "name": "pluginmw",
+  "version": "1.0.0",
+  "plugin": "Pluginmw",
+  "description": "motionboard plugin item template project for 6.4",
+  "scripts": {
+    "make": "webpack && node post.js"
+  },
+  "author": "r22n",
+  "license": "MIT",
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.3.4",
+    "css-loader": "^6.8.1",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "vue-loader": "^17.2.2",
+    "vue-style-loader": "^4.1.3",
+    "vue-template-compiler": "^2.7.14",
+    "webpack-cli": "^5.1.4",
+    "webpack-license-plugin": "^4.2.2"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.1",
+    "jsonschema": "^1.4.1",
+    "url": "^0.11.1",
+    "vue": "^3.3.4"
+  }
+}
