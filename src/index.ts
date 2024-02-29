@@ -4,7 +4,7 @@ import app from "./App.vue";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Config, ConfigSchema, init, states } from "./state";
 import { validate } from "jsonschema";
-import { PluginMotionChartData, PluginMotionChartListData, DatasourceType, DataSource } from './api';
+import { PluginMotionChartData, PluginMotionChartListData, DatasourceType, DataSource, apimock } from './api';
 
 if (!window.JSPLUGIN) {
     window.JSPLUGIN = {};
@@ -41,6 +41,7 @@ window.JSPLUGIN[d_name] = {
             });
 
             states[canvas] = init();
+            this.apidelcs();
 
             this.app = createApp(app, { state: states[canvas] });
             this.app.mount(this.top);
@@ -54,15 +55,7 @@ window.JSPLUGIN[d_name] = {
         }
 
         createChildren() {
-            const s = states[this.canvas];
-            s.drillDown = this.drillDown.bind(this);
-            s.drillUp = this.drillUp.bind(this);
-            s.drillThrough = this.drillThrough.bind(this);
-            s.relation = this.relation.bind(this);
-            s.dataPointAction = this.dataPointAction.bind(this);
-            s.existsSystemVar = this.existsSystemVar.bind(this);
-            s.getSystemVarValue = this.getSystemVarValue.bind(this);
-            s.setSystemVarValue = this.setSystemVarValue.bind(this);
+            this.apibind();
         }
 
         setConfig(config: string) {
@@ -90,18 +83,25 @@ window.JSPLUGIN[d_name] = {
         }
 
         // #region legacy 
+
         x = 0;
         y = 0;
         width = 0;
         height = 0;
-        drillDown = () => { };
-        drillUp = () => { };
-        drillThrough = () => { };
-        relation = () => { };
-        dataPointAction = () => { };
-        existsSystemVar = () => false;
-        getSystemVarValue = () => '';
-        setSystemVarValue = () => false;
+
+        apidelcs() {
+            Object.keys(apimock()).forEach(x => {
+                Reflect.set(this, x, () => 0);
+            });
+        }
+        apibind() {
+            const s = states[this.canvas];
+            Object.keys(apimock()).forEach(x => {
+                const b = Reflect.get(this, x) as () => {};
+                Reflect.set(s, x, b.bind(this));
+            });
+        }
+
         invalidateDisplayList = () => { };
         callLater = () => { };
         updateDisplayList() { }
@@ -119,6 +119,7 @@ window.JSPLUGIN[d_name] = {
         }
         onMouseEvent() { }
         onKeyboardEvent() { }
+
         //#endregion
     }
 };

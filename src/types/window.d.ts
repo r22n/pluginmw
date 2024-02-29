@@ -2,7 +2,7 @@ interface Window {
     JSPLUGIN: PLUGINS;
 };
 type PLUGINS = {
-    [name in string]?: PLUGIN;
+    [name in string]: PLUGIN;
 };
 type PLUGIN = {
     _class_: unknown;

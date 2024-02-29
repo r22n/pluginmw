@@ -5,6 +5,7 @@ export type JSAPI = {
     drillThrough: (itemData: DrilldownParam) => void;
     relation: (type: DrilldownType, itemData: DrilldownParam) => void;
     dataPointAction: (itemData: DrilldownParam) => void;
+    buttonAction: (item: String) => void;
     existsSystemVar: (name: string) => boolean;
     getSystemVarValue: (name: string) => string;
     setSystemVarValue: (name: string) => boolean;
@@ -17,6 +18,7 @@ export const apimock = (): JSAPI => ({
     drillThrough: () => { },
     relation: () => { },
     dataPointAction: () => { },
+    buttonAction: () => { },
     existsSystemVar: () => false,
     getSystemVarValue: () => '',
     setSystemVarValue: () => false,
